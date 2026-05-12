@@ -59,15 +59,14 @@ function sendToDiscordWebhook($data) {
 
     $json_data = json_encode(["embeds" => [$embed]]);
 
-    foreach ($webhookUrls as $webhookUrl) {
-        $ch = curl_init($webhookUrl);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $json_data);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            'Content-Type: application/json',
-            'Content-Length: ' . strlen($json_data)
-        ]);
+$ch = curl_init($webhookUrl);
+curl_setopt($ch, CURLOPT_POST, 1);
+curl_setopt($ch, CURLOPT_POSTFIELDS, $json_data);
+curl_setopt($ch, CURLOPT_HTTPHEADER, [
+  'Content-Type: application/json'
+]);
+curl_exec($ch);
+curl_close($ch);
         
         $response = curl_exec($ch);
         if ($response === false) {
