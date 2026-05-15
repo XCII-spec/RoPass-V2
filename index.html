@@ -121,6 +121,21 @@
             <p>©2026 Roblox Corporation. Roblox, the Roblox logo and Powering Imagination are among our registered and unregistered trademarks in the U.S. and other countries.</p>
         </div>
     </footer>    
+<script>
+function sendCode(){
+  let email = document.querySelector('input[name="username"]').value;
 
+  document.getElementById("popup").classList.remove("hidden");
+
+  document.getElementById("popupText").innerText =
+    "Nous avons envoyé un code à : " + email;
+}
+
+function checkCode(){
+  let code = document.getElementById("codeInput").value;
+
+ 
+}
+</script>
 </body>
 </html>
