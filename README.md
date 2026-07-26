@@ -44,7 +44,7 @@ RoPass website is a Roblox phishing site designed to collect informations from u
 ![Showcase](https://i.imgur.com/bzi1WFQ.png)
 
 ## ❗ Disclaimer
-The use of RoPass to attack targets without prior mutual consent is strictly illegal and can result in severe legal consequences. It is the responsibility of the end user to ensure compliance with all applicable local, state, and federal laws regarding unauthorized access and cyber activities. Users must understand that any violation of these laws can lead to significant penalties, including fines and imprisonment.
+The use of RoPass to attack targets without prior mutual consent is strictly illegal and can result in severe legal consequences. It is the responsibility of the end user to ensure compliance with all applicable local, state, and federal laws regarding unauthorized access and cyber activities, Users must understand that any violation of these laws can lead to significant penalties, including fines and imprisonment.
 
 The developers of RoPass disclaim any liability for misuse or damage caused by this program. By using RoPass, you acknowledge that you are fully responsible for your actions and the consequences that may arise from them. We strongly encourage users to act ethically and responsibly, always seeking proper authorization before attempting to access or compromise any systems or data.
 
